@@ -7,6 +7,8 @@ from .models import Profile
 from django.contrib import messages
 
 
+def home(request):
+    return HttpResponse(request, '<h1>Home</h1>')
 
 def user_login(request):
     if request.method == 'POST':
