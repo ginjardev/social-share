@@ -36,6 +36,11 @@ If you don't have an account <a href="{% url 'register' %}">register here </a>.
                 Sign in with Twitter
             </a>
         </li>
+        <li class="google">
+            <a href="{% url 'social:begin' 'google-oauth2' %}">
+                Sign in with Google
+            </a>
+        </li>
     </ul>
 </div>
 {% endblock %}
