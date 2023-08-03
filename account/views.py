@@ -7,6 +7,7 @@ from .models import Profile
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from .models import Profile
 
 def home(request):
     return HttpResponse(request, '<h1>Home</h1>')
