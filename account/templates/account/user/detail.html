@@ -43,9 +43,7 @@ formData.append('action', followButton.dataset.action);
 options['body'] = formData;
 
 // send HTTP request
-fetch(url, options)
-.then(response => response.json())
-.then(data => {
+fetch(url, options).then(response => response.json()).then(data => {
 if (data['status'] === 'ok')
 {
 var previousAction = followButton.dataset.action;
@@ -54,11 +52,11 @@ var previousAction = followButton.dataset.action;
 var action = previousAction === 'follow' ? 'unfollow' : 'follow';
 followButton.dataset.action = action;
 followButton.innerHTML = action;
+
 // update follower count
 var followerCount = document.querySelector('span.count .total');
 var totalFollowers = parseInt(followerCount.innerHTML);
-followerCount.innerHTML = previousAction === 'follow' ? totalFollowers
-+ 1 : totalFollowers - 1;
+followerCount.innerHTML = previousAction === 'follow' ? totalFollowers + 1 : totalFollowers - 1;
 }
 })
 });
