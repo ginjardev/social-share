@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Contact
 from actions.utils import create_action
+from actions.models import Action
 
 
 def home(request):
@@ -40,6 +41,8 @@ def user_login(request):
 
 @login_required
 def dashboard(request):
+    action = Action.objects.exclude(user=request.user)
+    follower_ids = request.user.following.values_list('id', flat=True)
     return render(request, 'account/dashboard.html', {'section':'dashboard'})
 
 def register(request):
