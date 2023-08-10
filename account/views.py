@@ -42,8 +42,13 @@ def user_login(request):
 @login_required
 def dashboard(request):
     action = Action.objects.exclude(user=request.user)
-    follower_ids = request.user.following.values_list('id', flat=True)
-    return render(request, 'account/dashboard.html', {'section':'dashboard'})
+    following_ids = request.user.following.values_list('id', flat=True)
+
+    if following_ids:
+        actions = actions.filter(user_id__in=following_ids)
+    actions = actions[:10]
+
+    return render(request, 'account/dashboard.html', {'section':'dashboard', 'actions': actions})
 
 def register(request):
     if request.method == 'POST':
