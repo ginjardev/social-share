@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
@@ -85,7 +84,7 @@ def edit(request):
 
 @login_required
 def user_list(request):
-    users = User.objects.filter(is_active=True)
+    users = Profile.objects.all()
     return render(request, 'account/user/list.html', {'section': 'people', 'users':users})
 
 @login_required

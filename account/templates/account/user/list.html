@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% load thumbnail %}
+
 {% block title %}People{% endblock %}
 {% block content %}
 <h1>People</h1>
 <div id="people-list">
     {% for user in users %}
     <div class="user">
-        {% load thumbnail %}
-        <img src="{{user.profile.photo.url}}">
+        <a href="{{ user.get_absolute_url }}">
+            <img src="{{ user.photo.url }}">
+        </a>
         <div class="info">
             <a href="{{ user.get_absolute_url }}" class="title">
                 {{ user.get_full_name }}
