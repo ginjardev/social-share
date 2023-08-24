@@ -9,6 +9,10 @@ from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from actions.utils import create_action
+import redis 
+from django.conf import settings
+
+r = redis.Redis(host=settings.REDIS_HOST, port=settings.REDIS_DB, db=settings.REDIS_DB)
 
 @login_required
 def image_create(request):
@@ -24,12 +28,15 @@ def image_create(request):
             return redirect(new_image.get_absolute_url())
     else:
         form = ImageCreateForm(data=request.GET)
-    return render(request, 'images/image/create.html', {'section': 'images','form': form})
+    return render(request, 'images/image/create.html', 
+                  {'section': 'images','form': form})
         
 
 def image_detail(request, id, slug):
     image = get_object_or_404(Image, id=id, slug=slug)
-    return render(request, 'images/image/detail.html', {'section':'images', 'image': image})
+    total_views = r.incr(f'image:{image.id}:views')
+    return render(request, 'images/image/detail.html', 
+                  {'section':'images', 'image': image, 'total_views':total_views})
 
 
 @login_required
